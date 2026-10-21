@@ -1,0 +1,11 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+num_simulation/generated_data/
+num_simulation/results/
+num_simulation/tmp/
+*.pt
+*.pth
+*.npy
+*.npz
