@@ -1,43 +1,39 @@
-# Fault Diagnosis Reproduction
+# Physics-Informed Neural Network Learning of Time-Delay Froth Bubble Size Distribution Dynamics for Reagent-Dosage Fault Detection and Diagnosis in Mineral Flotation
 
-This repository contains a selected, reproducible numerical simulation implementation for fault detection and diagnosis in a nonlinear flotation process. The simulation models B-spline probability density functions, delayed nonlinear dynamics, fault detection, fault diagnosis, and detection-delay evaluation.
+This repository provides selected figures and conclusions from the paper:
 
-## Contents
+**Physics-Informed Neural Network Learning of Time-Delay Froth Bubble Size Distribution Dynamics for Reagent-Dosage Fault Detection and Diagnosis in Mineral Flotation**
 
-- `num_simulation/simulation_data_generator.py`: synthetic time-series and PDF observation generation.
-- `num_simulation/models.py`: B-spline PDF, state dynamics, PINN model, and detection/diagnosis helpers.
-- `num_simulation/simulation_experiment.py`: simulation training and evaluation workflow.
-- `num_simulation/delay_evaluation.py`: threshold calibration and delay metrics.
-- `num_simulation/*delay*experiment.py`: fixed and time-varying delay experiments.
-- `num_simulation/test_*.py`: focused checks for delay evaluation.
+## Main conclusions
 
-Generated data, model checkpoints, and experiment outputs are intentionally excluded. Running experiments writes generated files locally.
+- B-spline coefficients provide a compact representation of froth bubble size distribution PDFs.
+- A nonlinear dynamic model with state and input delays captures delayed flotation responses.
+- The PINN-FDDMF framework combines data fitting, delayed physical dynamics, and smoothness regularization for state and distribution prediction.
+- Residual statistics support fault detection under operating-condition drift, while PDF morphology supports diagnosis of reagent overdosage and underdosage.
+- On independent industrial copper-flotation test sequences, PINN-FDDMF achieved the highest F1-scores for overdosage (0.990) and underdosage (0.980). PIDMD achieved the highest underdosage accuracy (0.997).
 
-## Setup
+## Representative results
 
-Use Python 3.10 or 3.11. Create an isolated environment, then install the dependencies:
+### Modeling accuracy
 
-```bash
-python -m venv .venv
-# Windows: .venv\Scripts\activate
-# macOS/Linux: source .venv/bin/activate
-python -m pip install -r requirements.txt
-```
+![Modeling accuracy comparison](figures/modeling_accuracy_comparison.png)
 
-## Run checks
+### Fault detection
 
-```bash
-python -m unittest discover -s num_simulation -p "test_*.py"
-```
+![Detection confusion matrix, case 1](figures/detection_confusion_matrix1.png)
 
-## Run a simulation
+![Detection confusion matrix, case 2](figures/detection_confusion_matrix2.png)
 
-```bash
-python num_simulation/simulation_experiment.py
-```
+### Fault diagnosis comparison
 
-The experiment scripts include command-line options for their respective study settings. Run a script with `--help` where available. Plot labels use Chinese fonts when available and fall back to a standard sans-serif font.
+![Diagnosis comparison](figures/diagnosis_comparison.png)
 
-## Scope and data
+### Industrial-data summary
 
-This is a selected code release, not a complete release of the original working directory. It contains no industrial or video data, derived datasets, trained weights, paper drafts, reviewer correspondence, or generated result files. All simulation data can be generated from the included source code.
+![Industrial diagnostic summary](figures/practical_matrix_combined.png)
+
+## Code availability
+
+The code is not included in this public repository. Researchers who need to inspect or request the implementation may contact **424087031@qq.com**.
+
+This repository does not include raw industrial data, video data, trained model weights, or other restricted materials.
