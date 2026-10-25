@@ -1,53 +1,47 @@
 # Physics-Informed Neural Network Learning of Time-Delay Froth Bubble Size Distribution Dynamics for Reagent-Dosage Fault Detection and Diagnosis in Mineral Flotation
 
-This repository provides selected figures and conclusions from the paper:
+This repository accompanies the paper **Physics-Informed Neural Network Learning of Time-Delay Froth Bubble Size Distribution Dynamics for Reagent-Dosage Fault Detection and Diagnosis in Mineral Flotation**.
 
-**Physics-Informed Neural Network Learning of Time-Delay Froth Bubble Size Distribution Dynamics for Reagent-Dosage Fault Detection and Diagnosis in Mineral Flotation**
+## Background and motivation
 
-## Process overview
+Mineral flotation is a core process for efficient separation of mineral resources. It is a complex physicochemical process involving gas--liquid--solid three-phase interactions, bubble--particle collision and attachment, froth drainage, and froth stability evolution. In industrial operation, flotation systems exhibit pronounced time-delay effects, such as delayed reagent action and froth transport lag, as well as strong nonlinearities caused by reagent-dependent bubble-size evolution and multiphase-flow coupling.
 
-Mineral flotation separates valuable minerals from ore through gas--liquid--solid interactions. Reagents regulate particle hydrophobicity and froth behavior, so overdosage or underdosage changes the size, shape, and stability of surface bubbles. These changes are delayed and nonlinear because reagent effects, bubble transport, and process dynamics do not occur instantaneously.
+Threshold monitoring of pulp level or aeration can miss reagent faults expressed through BSD peak shifts, asymmetry, and multimodality. Fixed thresholds are also vulnerable to time-varying flotation data. Distribution-aware monitoring with temporal and mechanistic information is therefore needed.
 
-The paper follows this workflow:
+## Proposed method
 
-1. Froth images are processed into bubble-size observations and time-varying bubble size distribution (BSD) probability density functions.
-2. B-spline basis functions compress each BSD into a coefficient vector that can be used as a low-dimensional process state.
-3. A nonlinear state-space model with state delays and input delays describes the evolution of the coefficient vector under normal and faulty operating conditions.
-4. PINN-FDDMF jointly minimizes measurement-fitting loss, delayed-dynamics residual loss, and a smoothness regularizer, combining process data with physical structure.
-5. Prediction residuals are used to detect abnormal reagent behavior, and BSD shape features are matched to identify reagent overdosage or underdosage.
+Motivated by these challenges, this paper proposes a physics-informed neural-network-driven fault detection and diagnosis framework for mineral flotation process monitoring, termed PINN-FDDMF. First, B-spline basis functions are used to construct a compact parametric representation of the BSD PDF, transforming distribution evolution into the trajectory modeling of a time-varying weight vector. Then, a nonlinear time-delay dynamic model with delayed states and delayed inputs is developed in the weight-vector space.
 
-The numerical simulation and industrial-data experiments evaluate modeling accuracy, detection performance, diagnosis performance, and robustness to operating-condition drift.
+Based on this model, a multi-objective PINN is designed by combining data fitting, time-delay physics residuals, and smoothness regularization. Finally, residual statistics are used for fault detection, and PDF morphological features are used to identify typical reagent faults, including reagent overdosage and underdosage.
 
-## Main conclusions
+## Modeling result
 
-- B-spline coefficients provide a compact representation of froth bubble size distribution PDFs.
-- A nonlinear dynamic model with state and input delays captures delayed flotation responses.
-- The PINN-FDDMF framework combines data fitting, delayed physical dynamics, and smoothness regularization for state and distribution prediction.
-- Residual statistics support fault detection under operating-condition drift, while PDF morphology supports diagnosis of reagent overdosage and underdosage.
-- On independent industrial copper-flotation test sequences, PINN-FDDMF achieved the highest F1-scores for overdosage (0.990) and underdosage (0.980). PIDMD achieved the highest underdosage accuracy (0.997).
-
-## Representative results
-
-### Modeling accuracy
+B-spline coefficients provide a compact representation of the time-varying BSD PDF, and their evolution is described by a nonlinear state-space model with state and input delays.
 
 ![Modeling accuracy comparison](figures/modeling_accuracy_comparison.png)
 
-### Fault detection
+## Detection result
 
-![Detection confusion matrix, case 1](figures/detection_confusion_matrix1.png)
+Prediction residuals are used to detect abnormal deviations, and adaptive residual evaluation accommodates residual distribution drift.
 
-![Detection confusion matrix, case 2](figures/detection_confusion_matrix2.png)
+![Detection confusion matrix for the first fault case](figures/detection_confusion_matrix1.png)
 
-### Fault diagnosis comparison
+![Detection confusion matrix for the second fault case](figures/detection_confusion_matrix2.png)
 
-![Diagnosis comparison](figures/diagnosis_comparison.png)
+## Diagnosis result
 
-### Industrial-data summary
+PDF morphology provides interpretable information for distinguishing reagent overdosage and underdosage faults.
+
+![Comparison of diagnosis methods](figures/diagnosis_comparison.png)
+
+## Experimental conclusion
+
+The evaluation includes numerical simulations and industrial copper flotation experiments. On independent industrial copper-flotation test sequences, PINN-FDDMF obtains the highest F1-scores for overdosage (0.990) and underdosage (0.980); PIDMD obtains the highest underdosage accuracy (0.997). The investigated fault scope is limited to reagent overdosage and underdosage under the studied conditions.
 
 ![Industrial diagnostic summary](figures/practical_matrix_combined.png)
 
-## Code availability
+## Code and data availability
 
 The code is not included in this public repository. Researchers who need to inspect or request the implementation may contact **424087031@qq.com**.
 
-This repository does not include raw industrial data, video data, trained model weights, or other restricted materials.
+This repository contains selected paper figures and does not include raw industrial data, video data, or trained model weights.
